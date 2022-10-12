@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DeleteResult } from 'mongodb';
+import { ImageUploaderService } from 'src/image-uploader/image-uploader.service';
 import { NftCollection, NftCollectionDocument } from './schemas/nft-collection.schema';
 import { CreateNftCollectionDto } from './dto/create-nft-collection.dto';
 import { UpdateNftCollectionDto } from './dto/update-nft-collection.dto';
@@ -12,6 +13,7 @@ export class NftCollectionService {
   constructor(
     @InjectModel(NftCollection.name)
     private readonly model: Model<NftCollectionDocument>,
+    private readonly imageUploader: ImageUploaderService,
   ) {}
 
   findAll(query: FindNftCollectionQueryDto): Promise<NftCollection[]> {
@@ -40,8 +42,11 @@ export class NftCollectionService {
   }
 
   create(createNftCollectionDto: CreateNftCollectionDto): Promise<NftCollection> {
+    const { picture, ...nftCollectionData } = createNftCollectionDto;
+    const filePath = this.imageUploader.upload(picture);
     return new this.model({
-      ...createNftCollectionDto,
+      ...nftCollectionData,
+      picture: filePath,
       createdAt: new Date(),
     }).save();
   }

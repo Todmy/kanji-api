@@ -1,4 +1,5 @@
 import { Controller, Get, Param, Body, Post, Put, Delete, Query } from '@nestjs/common';
+import { FormDataRequest } from 'nestjs-form-data';
 import { NftCollectionService } from './nft-collection.service';
 import { CreateNftCollectionDto } from './dto/create-nft-collection.dto';
 import { UpdateNftCollectionDto } from './dto/update-nft-collection.dto';
@@ -19,8 +20,8 @@ export class NftCollectionController {
   }
 
   @Post()
+  @FormDataRequest()
   create(@Body() createNftCollectionDto: CreateNftCollectionDto) {
-    console.log('createNftCollectionDto', createNftCollectionDto);
     return this.service.create(createNftCollectionDto);
   }
 
