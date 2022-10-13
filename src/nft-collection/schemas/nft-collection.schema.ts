@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Nft } from './nft.schema';
+import { NftCollectionDataHost, NftCollectionBlockchain } from '../enums';
 
 export type NftCollectionDocument = NftCollection & Document;
 
@@ -9,15 +10,12 @@ export class NftCollection {
   @Prop({ required: true })
   picture: string;
 
-  // blockchain module import?
-  @Prop({ required: true })
-  blockchain: string;
+  @Prop({ required: true, enum: NftCollectionBlockchain })
+  blockchain: NftCollectionBlockchain;
 
-  // hostage module import?
-  @Prop({ required: true })
-  dataHost: string;
+  @Prop({ required: true, enum: NftCollectionDataHost })
+  dataHost: NftCollectionDataHost;
 
-  // user module import?
   @Prop({ required: true })
   owner: string;
 

@@ -41,9 +41,9 @@ export class NftCollectionService {
     return this.model.findById(id).exec();
   }
 
-  create(createNftCollectionDto: CreateNftCollectionDto): Promise<NftCollection> {
+  async create(createNftCollectionDto: CreateNftCollectionDto): Promise<NftCollection> {
     const { picture, ...nftCollectionData } = createNftCollectionDto;
-    const filePath = this.imageUploader.upload(picture);
+    const filePath = await this.imageUploader.upload(picture);
     return new this.model({
       ...nftCollectionData,
       picture: filePath,
@@ -51,8 +51,25 @@ export class NftCollectionService {
     }).save();
   }
 
-  update(id: string, updateNftCollectionDto: UpdateNftCollectionDto): Promise<NftCollection> {
-    return this.model.findByIdAndUpdate(id, updateNftCollectionDto, { new: true }).exec();
+  async update(id: string, updateNftCollectionDto: UpdateNftCollectionDto): Promise<NftCollection> {
+    const { picture, ...nftCollectionData } = updateNftCollectionDto;
+    let filePath;
+    if (picture) {
+      filePath = await this.imageUploader.upload(picture);
+
+      // async delete old picture
+      this.model.findById(id).then((nftCollection) => {
+        this.imageUploader.delete(nftCollection.picture);
+      });
+    }
+
+    const updateChunk = {
+      ...nftCollectionData,
+      ...(filePath ? { picture: filePath } : {}),
+      updatedAt: new Date(),
+    };
+
+    return this.model.findByIdAndUpdate(id, updateChunk, { new: true }).exec();
   }
 
   softDelete(id: string): Promise<NftCollection> {

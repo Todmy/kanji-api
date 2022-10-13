@@ -10,6 +10,9 @@ export class UpdateNftCollectionDto extends BaseNftCollectionDto {
   picture: Express.Multer.File;
 
   @IsOptional()
+  collectionName: string;
+
+  @IsOptional()
   symbol: string;
 
   @IsOptional()

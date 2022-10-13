@@ -26,7 +26,11 @@ export class NftCollectionController {
   }
 
   @Put(':id')
+  @FormDataRequest()
   update(@Param('id') id: string, @Body() updateNftCollectionDto: UpdateNftCollectionDto) {
+    if (Object.keys(updateNftCollectionDto).length === 0) {
+      return this.service.findOne(id);
+    }
     return this.service.update(id, updateNftCollectionDto);
   }
 

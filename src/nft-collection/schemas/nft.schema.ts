@@ -19,10 +19,6 @@ export class Nft {
   })
   collection: NftCollection;
 
-  // user module import?
-  @Prop({ required: true })
-  owner: string;
-
   @Prop({ required: true })
   price: string;
 
