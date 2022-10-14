@@ -1,11 +1,12 @@
 import { Controller, Get, Param, Body, Post, Put, Delete, Query } from '@nestjs/common';
 import { FormDataRequest } from 'nestjs-form-data';
 import { NftCollectionService } from './nft-collection.service';
-import { CreateNftCollectionDto } from './dto/create-nft-collection.dto';
-import { UpdateNftCollectionDto } from './dto/update-nft-collection.dto';
-import { FindNftCollectionQueryDto } from './dto/find-nft-collection-query.dto';
-import { FindNftCollectionPaginationDto } from './dto/find-nft-collection-pagination.dto';
-
+import {
+  CreateNftCollectionDto,
+  UpdateNftCollectionDto,
+  FindNftCollectionQueryDto,
+  FindNftCollectionPaginationDto,
+} from './dto';
 @Controller('nft-collection')
 export class NftCollectionController {
   constructor(private readonly service: NftCollectionService) {}

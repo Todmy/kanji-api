@@ -4,10 +4,12 @@ import { Model } from 'mongoose';
 import { DeleteResult } from 'mongodb';
 import { ImageUploaderService } from 'src/image-uploader/image-uploader.service';
 import { NftCollection, NftCollectionDocument } from './schemas/nft-collection.schema';
-import { CreateNftCollectionDto } from './dto/create-nft-collection.dto';
-import { UpdateNftCollectionDto } from './dto/update-nft-collection.dto';
-import { FindNftCollectionQueryDto } from './dto/find-nft-collection-query.dto';
-import { FindNftCollectionPaginationDto } from './dto/find-nft-collection-pagination.dto';
+import {
+  CreateNftCollectionDto,
+  UpdateNftCollectionDto,
+  FindNftCollectionQueryDto,
+  FindNftCollectionPaginationDto,
+} from './dto';
 
 @Injectable()
 export class NftCollectionService {
