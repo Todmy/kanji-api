@@ -7,6 +7,7 @@ import { NftCollection, NftCollectionDocument } from './schemas/nft-collection.s
 import { CreateNftCollectionDto } from './dto/create-nft-collection.dto';
 import { UpdateNftCollectionDto } from './dto/update-nft-collection.dto';
 import { FindNftCollectionQueryDto } from './dto/find-nft-collection-query.dto';
+import { FindNftCollectionPaginationDto } from './dto/find-nft-collection-pagination.dto';
 
 @Injectable()
 export class NftCollectionService {
@@ -16,7 +17,20 @@ export class NftCollectionService {
     private readonly imageUploader: ImageUploaderService,
   ) {}
 
-  findAll(query: FindNftCollectionQueryDto): Promise<NftCollection[]> {
+  findAll(query: FindNftCollectionQueryDto & FindNftCollectionPaginationDto): Promise<NftCollection[]> {
+    const mongoQuery = this.getMongoQueryForFindAll(query);
+    const { skip: documentsToSkip, limit: limitOfDocuments } = query;
+
+    const dbQuery = this.model.find(mongoQuery).skip(documentsToSkip).sort({ createdAt: -1 });
+
+    if (limitOfDocuments) {
+      dbQuery.limit(limitOfDocuments);
+    }
+
+    return dbQuery.exec();
+  }
+
+  private getMongoQueryForFindAll(query: FindNftCollectionQueryDto) {
     const { createdFrom, createdTo, ...queryParams } = query;
     const mongoQuery = {
       ...queryParams,
@@ -34,7 +48,8 @@ export class NftCollectionService {
         $lt: createdTo,
       };
     }
-    return this.model.find(mongoQuery).exec();
+
+    return mongoQuery;
   }
 
   findOne(id: string): Promise<NftCollection> {
@@ -43,7 +58,7 @@ export class NftCollectionService {
 
   async create(createNftCollectionDto: CreateNftCollectionDto): Promise<NftCollection> {
     const { picture, ...nftCollectionData } = createNftCollectionDto;
-    const filePath = await this.imageUploader.upload(picture);
+    const filePath = picture ? await this.imageUploader.upload(picture) : null;
     return new this.model({
       ...nftCollectionData,
       picture: filePath,

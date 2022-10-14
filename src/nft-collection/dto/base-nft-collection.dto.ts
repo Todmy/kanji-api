@@ -1,11 +1,12 @@
 import { Transform } from 'class-transformer';
-import { IsString, IsNotEmpty, IsInt, IsDefined } from 'class-validator';
+import { IsString, IsNotEmpty, IsInt, IsDefined, IsOptional } from 'class-validator';
 import { IsFile, MaxFileSize, HasMimeType } from 'nestjs-form-data';
 import { pipe, trim, toLowerCase, toNumber } from 'src/common/helper/cast.helper';
 
 const MAX_FILE_SIZE = 1024 * 1024 * 100; // 10MB
 export class BaseNftCollectionDto {
   @Transform(({ value }) => value)
+  @IsOptional()
   @IsFile()
   @MaxFileSize(MAX_FILE_SIZE)
   @HasMimeType(['image/jpeg', 'image/png'])

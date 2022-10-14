@@ -7,9 +7,6 @@ import { BaseNftDto } from './base-nft.dto';
 
 export class UpdateNftCollectionDto extends BaseNftCollectionDto {
   @IsOptional()
-  picture: Express.Multer.File;
-
-  @IsOptional()
   collectionName: string;
 
   @IsOptional()

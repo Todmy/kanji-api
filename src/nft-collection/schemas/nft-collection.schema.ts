@@ -7,7 +7,7 @@ export type NftCollectionDocument = NftCollection & Document;
 
 @Schema()
 export class NftCollection {
-  @Prop({ required: true })
+  @Prop({ default: null })
   picture: string;
 
   @Prop({ required: true, enum: NftCollectionBlockchain })

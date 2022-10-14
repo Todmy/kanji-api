@@ -4,13 +4,14 @@ import { NftCollectionService } from './nft-collection.service';
 import { CreateNftCollectionDto } from './dto/create-nft-collection.dto';
 import { UpdateNftCollectionDto } from './dto/update-nft-collection.dto';
 import { FindNftCollectionQueryDto } from './dto/find-nft-collection-query.dto';
+import { FindNftCollectionPaginationDto } from './dto/find-nft-collection-pagination.dto';
 
 @Controller('nft-collection')
 export class NftCollectionController {
   constructor(private readonly service: NftCollectionService) {}
 
   @Get()
-  index(@Query() query: FindNftCollectionQueryDto) {
+  index(@Query() query: FindNftCollectionQueryDto & FindNftCollectionPaginationDto) {
     return this.service.findAll(query);
   }
 
