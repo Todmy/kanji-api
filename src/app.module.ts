@@ -16,7 +16,7 @@ import { ImageUploaderModule } from './image-uploader/image-uploader.module';
     ServeStaticModule.forRoot({
       rootPath: path.join(__dirname, '..', 'client', 'build'),
     }),
-    MongooseModule.forRoot(process.env.MONGO_URL),
+    MongooseModule.forRoot(process.env.KN_MONGO_URL),
     NftCollectionModule,
     ImageUploaderModule,
   ],

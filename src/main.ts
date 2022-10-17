@@ -3,16 +3,16 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { config } from 'aws-sdk';
 
-const SERVER_PORT = parseInt(process.env.SERVER_PORT, 10) || 3000;
+const SERVER_PORT = parseInt(process.env.KN_SERVER_PORT, 10) || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: process.env.NODE_ENV === 'development' });
   app.setGlobalPrefix('/api/v1');
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRETE_ACCESS_KEY,
-    region: process.env.AWS_REGION,
+    accessKeyId: process.env.KN_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.KN_AWS_SECRETE_ACCESS_KEY,
+    region: process.env.KN_AWS_REGION,
   });
   await app.listen(SERVER_PORT);
 }
