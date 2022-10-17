@@ -6,8 +6,11 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "nest build",
+    "prebuild": "rimraf dist && rimraf public",
+    "build": "npm run build:client && npm run build:api",
+    "build:api": "nest build",
+    "build:client": "cd ./client && npm run build",
+
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -26,6 +29,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/mongoose": "^9.2.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/serve-static": "^3.0.0",
     "@types/aws-sdk": "^2.7.0",
     "aws-sdk": "^2.1232.0",
     "class-transformer": "^0.5.1",

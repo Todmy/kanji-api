@@ -1,6 +1,9 @@
+import * as path from 'path';
+
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { NftCollectionModule } from './nft-collection/nft-collection.module';
 import { ImageUploaderModule } from './image-uploader/image-uploader.module';
@@ -10,7 +13,10 @@ import { ImageUploaderModule } from './image-uploader/image-uploader.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot('mongodb://localhost/kanji'),
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'client', 'build'),
+    }),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     NftCollectionModule,
     ImageUploaderModule,
   ],
