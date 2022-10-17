@@ -25,7 +25,6 @@ export class ImageUploaderService {
   }
 
   async delete(file: string): Promise<void> {
-    console.log(file);
     const s3 = new S3();
     const key = file.split('/').pop();
     await s3

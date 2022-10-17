@@ -76,7 +76,9 @@ export class NftCollectionService {
 
       // async delete old picture
       this.model.findById(id).then((nftCollection) => {
-        this.imageUploader.delete(nftCollection.picture);
+        if (nftCollection.picture) {
+          this.imageUploader.delete(nftCollection.picture);
+        }
       });
     }
 

@@ -36,7 +36,7 @@ export class NftCollection {
   @Prop({
     required: true,
     min: 0,
-    max: 1000,
+    max: 10000,
   })
   amount: number;
 

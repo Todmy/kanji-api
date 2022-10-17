@@ -6,7 +6,7 @@ import { config } from 'aws-sdk';
 const SERVER_PORT = parseInt(process.env.SERVER_PORT, 10) || 3000;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.setGlobalPrefix('/api/v1');
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   config.update({
