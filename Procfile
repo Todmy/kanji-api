@@ -1,1 +1,2 @@
-web: npm run build:client && npm run start:prod
+release: ./release.sh
+web: node ./dist/main.js
