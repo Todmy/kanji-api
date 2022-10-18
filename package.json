@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "postinstall": "cd client && npm ci",
+    "web": "npm run build && npm run start:prod",
 
     "prebuild": "rimraf dist && rimraf public",
     "build": "npm run build:client && npm run build:api",
