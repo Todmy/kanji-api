@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import { IsString, IsNotEmpty, IsInt, IsDefined, IsOptional } from 'class-validator';
 import { IsFile, MaxFileSize, HasMimeType } from 'nestjs-form-data';
-import { pipe, trim, toLowerCase, toNumber } from 'src/common/helper/cast.helper';
+import { trim, toNumber } from 'src/common/helper/cast.helper';
 
 const MAX_FILE_SIZE = 1024 * 1024 * 100; // 10MB
 export class BaseNftCollectionDto {
@@ -12,13 +12,13 @@ export class BaseNftCollectionDto {
   @HasMimeType(['image/jpeg', 'image/png'])
   picture: Express.Multer.File;
 
-  @Transform(({ value }) => pipe(trim, toLowerCase)(value))
+  @Transform(({ value }) => trim(value))
   @IsDefined()
   @IsNotEmpty()
   @IsString()
   collectionName: string;
 
-  @Transform(({ value }) => pipe(trim, toLowerCase)(value))
+  @Transform(({ value }) => trim(value))
   @IsDefined()
   @IsNotEmpty()
   @IsString()
@@ -30,7 +30,7 @@ export class BaseNftCollectionDto {
   @IsInt()
   amount: number;
 
-  @Transform(({ value }) => pipe(trim, toLowerCase)(value))
+  @Transform(({ value }) => trim(value))
   @IsDefined()
   @IsNotEmpty()
   @IsString()
