@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "postinstall": "cd client && npm ci",
+
     "prebuild": "rimraf dist && rimraf public",
     "build": "npm run build:client && npm run build:api",
     "build:api": "nest build",
