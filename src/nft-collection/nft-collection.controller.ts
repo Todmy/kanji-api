@@ -9,7 +9,7 @@ import {
 } from './dto';
 @Controller('nft-collection')
 export class NftCollectionController {
-  constructor(private readonly service: NftCollectionService) {}
+  constructor(private readonly service: NftCollectionService) { }
 
   @Get()
   index(@Query() query: FindNftCollectionQueryDto & FindNftCollectionPaginationDto) {
@@ -41,7 +41,7 @@ export class NftCollectionController {
     return this.service.softDelete(id);
   }
 
-  // @Admin() - should be implemented as a guard
+  // TODO: @Admin() - should be implemented as a guard
   @Delete()
   hardDeleteAll() {
     return this.service.hardDeleteAll();
